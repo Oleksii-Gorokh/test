@@ -1,0 +1,6 @@
+requests
+fastapi
+uvicorn
+wemake-python-styleguide
+mypy
+types-requests
