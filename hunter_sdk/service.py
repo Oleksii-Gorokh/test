@@ -1,6 +1,7 @@
 from typing import Any, Dict
 from hunter_sdk.client import HunterClient
 from hunter_sdk.storage import Storage
+from hunter_sdk.models import EmailVerificationData, DomainSearchData
 
 
 class HunterService(object):
@@ -8,15 +9,17 @@ class HunterService(object):
         self._client = client
         self._storage = storage
 
-    def verify_and_save(self, email: str) -> Dict[str, Any]:
-        result = self._client.verify_email(email)
-        self._storage.create(email, result)
-        return result
+    async def verify_and_save(self, email: str) -> EmailVerificationData:
+        raw_data = await self._client.verify_email(email)
+        validated_data = EmailVerificationData(**raw_data)
+        self._storage.create(email, validated_data.dict())
+        return validated_data
 
-    def search_and_save(self, domain: str) -> Dict[str, Any]:
-        result = self._client.domain_search(domain)
-        self._storage.create(domain, result)
-        return result
+    async def search_and_save(self, domain: str) -> DomainSearchData:
+        raw_data = await self._client.domain_search(domain)
+        validated_data = DomainSearchData(**raw_data)
+        self._storage.create(domain, validated_data.dict())
+        return validated_data
 
     def get_stored_data(self, key: str) -> Any:
         return self._storage.read(key)

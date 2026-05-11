@@ -1,6 +1,7 @@
-requests
+httpx
 fastapi
 uvicorn
+pydantic
+pydantic-settings
 wemake-python-styleguide
 mypy
-types-requests
