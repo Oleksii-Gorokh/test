@@ -15,7 +15,9 @@ service = HunterService(client, storage)
 @app.get('/verify/{email}')
 async def verify_email(email: str):
     try:
-        return await service.verify_and_save(email)
+        verification_data = await service.verify_email(email)
+        service.save_email_verification(verification_data)
+        return verification_data
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
@@ -23,7 +25,9 @@ async def verify_email(email: str):
 @app.get('/search/{domain}')
 async def search_domain(domain: str):
     try:
-        return await service.search_and_save(domain)
+        domain_data = await service.search_domain(domain)
+        service.save_domain_search(domain_data)
+        return domain_data
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
