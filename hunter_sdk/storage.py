@@ -14,12 +14,14 @@ class Storage(object):
         return self._data.get(key)
 
     def update(self, key: str, value: Any) -> None:
-        if key in self._data:
-            self._data[key] = value
+        if key not in self._data:
+            raise KeyError(f'Key {key} not found in storage')
+        self._data[key] = value
 
     def delete(self, key: str) -> None:
-        if key in self._data:
-            del self._data[key]
+        if key not in self._data:
+            raise KeyError(f'Key {key} not found in storage')
+        del self._data[key]
 
 
 class FileStorage(Storage):
