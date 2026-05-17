@@ -1,1 +1,1 @@
-
+"""Hunter SDK package."""

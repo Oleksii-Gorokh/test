@@ -1,3 +1,5 @@
+"""FastAPI application for Hunter SDK integration."""
+
 import os
 from fastapi import FastAPI, HTTPException
 from hunter_sdk.client import HunterClient
@@ -14,6 +16,7 @@ service = HunterService(client, storage)
 
 @app.get('/verify/{email}')
 async def verify_email(email: str):
+    """Verify email endpoint."""
     try:
         verification_data = await service.verify_email(email)
         service.save_email_verification(verification_data)
@@ -24,6 +27,7 @@ async def verify_email(email: str):
 
 @app.get('/search/{domain}')
 async def search_domain(domain: str):
+    """Search domain endpoint."""
     try:
         domain_data = await service.search_domain(domain)
         service.save_domain_search(domain_data)
@@ -34,6 +38,7 @@ async def search_domain(domain: str):
 
 @app.get('/storage/{key}')
 async def get_storage(key: str):
+    """Retrieve stored data endpoint."""
     data = service.get_stored_data(key)
     if not data:
         raise HTTPException(status_code=404, detail='Not found')

@@ -1,8 +1,12 @@
+"""Pydantic models for Hunter API responses."""
+
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel
 
 
 class EmailVerificationData(BaseModel):
+    """Model representing email verification result."""
+
     result: str
     score: int
     email: str
@@ -18,6 +22,8 @@ class EmailVerificationData(BaseModel):
 
 
 class DomainSearchData(BaseModel):
+    """Model representing domain search result."""
+
     domain: str
     disposable: bool
     webmail: bool
